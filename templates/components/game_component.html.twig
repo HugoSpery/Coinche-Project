@@ -1,0 +1,557 @@
+<div{{ attributes }}>
+    <section class="plateau" data-controller="game" slot="{{ game.code }}">
+        <a href="{{ path('app_left_game',{code : game.code}) }}" class="quit-button">Quitter</a>
+
+        <div class="alertify-notifier">
+
+        </div>
+        <section class="start">
+            <div class="container-score">
+                <article class="score">
+                    <h2>Score : </h2>
+                    <p class="score-red">Rouge : {{ game.pointsRed }}</p>
+                    <p class="score-blue">Bleu : {{ game.pointsBlue }}</p>
+
+                </article>
+                <article class="score">
+                    <h2>Score contrat : </h2>
+                    <p class="score-red">
+                        Rouge : {{ game.rounds[game.rounds|length-1].pointsRed }}
+                        {% if game.rounds[game.rounds|length-1].announceRed > 0 %}
+                            ( + {{ game.rounds[game.rounds|length-1].announceRed }} )
+                        {% endif %}
+                    </p>
+                    <p class="score-blue">
+                        Bleu : {{ game.rounds[game.rounds|length-1].pointsBlue }}
+                        {% if game.rounds[game.rounds|length-1].announceBlue > 0 %}
+                            ( + {{ game.rounds[game.rounds|length-1].announceBlue }} )
+                        {% endif %}
+                    </p>
+
+                </article>
+                <article class="contrat">
+                    <h2>Contrat : </h2>
+                    {% if game.rounds[game.rounds|length-1].player and game.rounds[game.rounds|length-1].player in game.teamRed %}
+                        {% set color = "score-red" %}
+                    {% else %}
+                        {% set color = "score-blue" %}
+                    {% endif %}
+                    {% if game.rounds[game.rounds|length-1].type %}
+                        <p class="{{ color }}">{{ game.rounds[game.rounds|length-1].type.value }}</p>
+                        <p class="{{ color }}">{{ game.rounds[game.rounds|length-1].points }}</p>
+                    {% else %}
+                        <p>Aucun</p>
+                        <p>0</p>
+                    {% endif %}
+                </article>
+            </div>
+
+            <div>
+                <div class="middle">
+                    <div class="heap">
+                        {% if not game.rounds[game.rounds|length-1].isStart %}
+                            {% for i in range(0,2) %}
+                                {% for player in this.players %}
+                                    {% for j in range(0,2) %}
+                                        {% if i == 0 %}
+                                            {% set card = player.hand.cards[j] %}
+                                            <div class="card card-heap0" slot="{{ card.number }}-{{ card.type.value }}"
+                                                 title="{{ asset(card.imageFront) }}">
+                                                <img class="card-image" src="{{ asset(card.imageBack) }}" alt="card">
+                                            </div>
+                                        {% endif %}
+                                        {% if i == 1 %}
+                                            {% set card = player.hand.cards[j+3] %}
+                                            <div class="card card-heap1" slot="{{ card.number }}-{{ card.type.value }}"
+                                                 title="{{ asset(card.imageFront) }}">
+                                                <img class="card-image" src="{{ asset(card.imageBack) }}" alt="card">
+                                            </div>
+                                        {% endif %}
+                                        {% if i == 2 %}
+                                            {% if j < 2 %}
+                                                {% set card = player.hand.cards[j+6] %}
+                                                <div class="card card-heap2"
+                                                     slot="{{ card.number }}-{{ card.type.value }}"
+                                                     title="{{ asset(card.imageFront) }}">
+                                                    <img class="card-image" src="{{ asset(card.imageBack) }}"
+                                                         alt="card">
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% set cpt=0 %}
+                {% for player in this.getPlayers %}
+
+                    <div class="
+                {% if cpt==0 %}
+                    bottom
+                {% elseif cpt ==1 %}
+                    left
+                {% elseif cpt ==2 %}
+                    top
+                {% elseif cpt ==3 %}
+                    right
+                {% endif %}
+            ">
+
+
+                        <article class="user
+                    {% if cpt == 1 %}
+                        user-left
+                    {% elseif cpt == 3 %}
+                        user-right
+                    {% else %}
+                        user-middle
+                    {% endif %}
+                ">
+                            <div class="
+                            {% if cpt == 0 or cpt == 2 %}
+                                content-time
+                            {% endif %}
+                        ">
+                                <div class="progress-circle-container">
+                                    <svg>
+                                        <!-- Cercle de fond -->
+                                        <circle cx="20" cy="20" r="15" stroke="#eee" stroke-width="6"
+                                                fill="none"></circle>
+                                        <!-- Cercle de progression -->
+                                        <circle cx="20" cy="20" r="15" stroke="#3498db" stroke-width="6" fill="none"
+                                                stroke-linecap="round"
+                                                stroke-dasharray="95"
+                                                stroke-dashoffset="95"
+                                                id="progressCircle"></circle>
+                                    </svg>
+                                </div>
+
+                                <img class="avatar" src="{{ asset(player.avatar) }}" alt="avatar">
+                            </div>
+
+                            <p class="name
+                        {% if player in game.teamBlue %}
+                            score-blue
+                        {% else %}
+                            score-red
+                        {% endif %}
+                    ">{{ player.username }}</p>
+
+
+                            <article class="points-selection">
+                                <p class="atout"></p>
+                            </article>
+
+                        </article>
+                        <div class="
+                {% if cpt == 1 or cpt == 3 %}
+                        adv
+                {% endif %}
+                content-card
+                ">
+
+                        </div>
+                    </div>
+                    {% set cpt=cpt+1 %}
+                {% endfor %}
+                <button data-action="live#$render" style="visibility: hidden" class="btn-sender">Send</button>
+
+            </div>
+        </section>
+
+
+        <!-- part2 -->
+
+
+        <section class="game">
+            <div class="container-score">
+                <article class="score">
+                    <h2>Score : </h2>
+                    <p class="score-red">Rouge : {{ game.pointsRed }}</p>
+                    <p class="score-blue">Bleu : {{ game.pointsBlue }}</p>
+
+                </article>
+                <article class="score">
+                    <h2>Score contrat : </h2>
+                    <p class="score-red">
+                        Rouge : {{ game.rounds[game.rounds|length-1].pointsRed }}
+                        {% if game.rounds[game.rounds|length-1].announceRed > 0 %}
+                            ( + {{ game.rounds[game.rounds|length-1].announceRed }} )
+                        {% endif %}
+                    </p>
+                    <p class="score-blue">
+                        Bleu : {{ game.rounds[game.rounds|length-1].pointsBlue }}
+                        {% if game.rounds[game.rounds|length-1].announceBlue > 0 %}
+                            ( + {{ game.rounds[game.rounds|length-1].announceBlue }} )
+                        {% endif %}
+                    </p>
+
+                </article>
+                <article class="contrat">
+                    <h2>Contrat : </h2>
+                    {% if game.rounds[game.rounds|length-1].player and game.rounds[game.rounds|length-1].player in game.teamRed %}
+                        {% set color = "score-red" %}
+                    {% else %}
+                        {% set color = "score-blue" %}
+                    {% endif %}
+                    {% if game.rounds[game.rounds|length-1].type %}
+                        <p class="{{ color }}">{{ game.rounds[game.rounds|length-1].type.value }}</p>
+                        <p class="{{ color }}">{{ game.rounds[game.rounds|length-1].points }}</p>
+                    {% else %}
+                        <p>Aucun</p>
+                        <p>0</p>
+                    {% endif %}
+                </article>
+            </div>
+            <div>
+                <div class="middle">
+                    <div class="card-played">
+                        <div class="bottom-played">
+
+                        </div>
+                        <div class="left-played">
+
+                        </div>
+                        <div class="right-played">
+
+                        </div>
+                        <div class="top-played">
+
+                        </div>
+                        {% for card in game.rounds[game.rounds|length-1].heap %}
+                            <div class="card card-heap-played
+                    {% if card in this.getPlayers[0].hand.cards %}
+                        bottom-played
+                    {% elseif card in this.getPlayers[1].hand.cards %}
+                        left-played
+                    {% elseif card in this.getPlayers[2].hand.cards %}
+                        top-played
+                    {% elseif card in this.getPlayers[3].hand.cards %}
+                        right-played
+                    {% endif %}
+                " slot="{{ card.number }}-{{ card.type.value }}">
+                                <img class="card-image" src="{{ asset(card.imageFront) }}" alt="card">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% set cpt=0 %}
+                {% for player in this.getPlayers %}
+
+                    <div class="
+                {% if cpt==0 %}
+                    bottom
+                {% elseif cpt ==1 %}
+                    left
+                {% elseif cpt ==2 %}
+                    top
+                {% elseif cpt ==3 %}
+                    right
+                {% endif %}
+            ">
+
+
+                        <article class="user
+                    {% if cpt == 1 %}
+                        user-left
+                    {% elseif cpt == 3 %}
+                        user-right
+                    {% else %}
+                        user-middle
+                    {% endif %}
+                ">
+                            <div class="
+                            {% if cpt == 0 or cpt == 2 %}
+                                content-time
+                            {% endif %}
+                        ">
+                                <div class="progress-circle-container">
+                                    <svg>
+                                        <!-- Cercle de fond -->
+                                        <circle cx="20" cy="20" r="15" stroke="#eee" stroke-width="6"
+                                                fill="none"></circle>
+                                        <!-- Cercle de progression -->
+                                        <circle cx="20" cy="20" r="15" stroke="#3498db" stroke-width="6" fill="none"
+                                                stroke-linecap="round"
+                                                stroke-dasharray="95"
+                                                stroke-dashoffset="95"
+                                                id="progressCircle"></circle>
+                                    </svg>
+                                </div>
+
+                                <img class="avatar" src="{{ asset(player.avatar) }}" alt="avatar">
+                            </div>
+
+                            <p class="name
+                        {% if player in game.teamBlue %}
+                            score-blue
+                        {% else %}
+                            score-red
+                        {% endif %}
+                    " slot="{{ cpt }}">{{ player.username }}</p>
+
+                            {% if player == game.rounds[game.rounds|length-1].player and not game.rounds[game.rounds|length-1].isStart %}
+                                <article class="points-selection current">
+                                    <p class="atout">{{ game.rounds[game.rounds|length-1].points }} {{ game.rounds[game.rounds|length-1].type.value }}</p>
+                                </article>
+                            {% elseif player == game.rounds[game.rounds|length-1].playerAnnounce %}
+                                <article class="points-selection current">
+                                    <p class="atout">
+                                        {% for announce in game.rounds[game.rounds|length-1].announceName %}
+                                            {{ announce }},
+                                        {% endfor %}
+                                    </p>
+                                </article>
+                            {% else %}
+                                <article class="points-selection">
+                                    <p class="atout"></p>
+                                </article>
+                            {% endif %}
+
+                        </article>
+                        <div class="
+                {% if cpt == 1 or cpt == 3 %}
+                        adv
+                {% endif %}
+                content-card card-choose
+                ">
+                            {% for card in player.hand.cards %}
+                                <div class="card cardPlayable" slot="{{ card.number }}-{{ card.type.value }}">
+                                    <img class="
+                                {% if cpt == 1 or cpt == 3 %}
+                                    card-image-other
+                                {% else %}
+                                    card-image
+                                {% endif %}
+                            " src="
+                                {% if cpt == 0 %}
+                                    {{ asset(card.imageFront) }}
+                                {% else %}
+                                    {{ asset(card.imageBack) }}
+                                {% endif %}
+                            " alt="card">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% set cpt=cpt+1 %}
+                {% endfor %}
+                <button data-action="live#$render" style="visibility: hidden" class="btn-sender">Send</button>
+
+            </div>
+
+            <div class="info-starting">
+                <!-- Section pour sélectionner l'atout -->
+                <div class="atout-section">
+                    <div class="atout-title">Choisissez l'atout</div>
+                    <div class="atout-icons">
+                        <button class="atout-button" data-action="click->game#clickAtoutButton" data-type="heart"><img class="atout-img" data-type="heart"
+                                                                            src="{{ asset('images/heart.png') }}"
+                                                                            alt="img">
+                        </button>
+                        <button class="atout-button" data-action="click->game#clickAtoutButton" data-type="spade"><img class="atout-img" data-type="spade"
+                                                                            src="{{ asset('images/spade.webp') }}"
+                                                                            alt="img">
+                        </button>
+                        <button class="atout-button" data-action="click->game#clickAtoutButton" data-type="diamond"><img class="atout-img" data-type="diamond"
+                                                                              src="{{ asset('images/diamond.png') }}"
+                                                                              alt="img">
+                        </button>
+                        <button class="atout-button" data-action="click->game#clickAtoutButton" data-type="club"><img class="atout-img" data-type="club"
+                                                                           src="{{ asset('images/club.png') }}"
+                                                                           alt="img">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="points-section">
+                    <div class="points-title">Points du contrat</div>
+                    <div class="points-buttons">
+                        {% set point = 80 %}
+                        {% set max_point = 160 %}
+                        {% set last_round_point = game.rounds[game.rounds|length - 1].points %}
+
+                        {% for current_point in range(point, max_point, 10) %}
+                            {% if current_point <= max_point and current_point > last_round_point %}
+                                <button data-action="click->game#clickPointsButton" class="points-button"
+                                        data-points="{{ current_point }}">{{ current_point }}</button>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <button data-action="click->game#validButton" class="valid">Valider</button>
+                <button data-action="click->game#passButton" class="pass-button">Passer</button>
+
+            </div>
+
+            <div class="info-announce">
+                <h3>Voulez-vous annoncer votre annonce ?</h3>
+                <button data-action="click->game#validAnnounce" class="valid-announce">Annoncer</button>
+                <button data-action="click->game#passAnnounce" class="pass-button">Passer</button>
+            </div>
+
+
+            <h2 class="waiting">En Attente de {{ game.rounds[game.rounds|length-1].waitingUser.username }}...</h2>
+        </section>
+
+    </section>
+
+    <script>
+
+
+
+        // Ajoute un écouteur pour détecter le mouvement de la souris sur la carte
+
+
+
+
+
+
+
+       /* if ('{{ game.rounds[game.rounds|length-1].isStart }}' === '' || '{{ game.rounds[game.rounds|length-1].isStart }}' === 'false') {
+            fetch('/game/choose-atout/{{ game.code }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nextPlayer: null,
+                })
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if (data.message === "your turn") {
+                    infoStarting.style.display = 'block';
+                } else {
+                    waiting.style.display = 'block';
+                }
+            });
+
+        }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* if ("{{ game.rounds[game.rounds|length-1].isStart }}" === 'true' || "{{ game.rounds[game.rounds|length-1].isStart }}" !== '') {
+            if ("{{ game.rounds[game.rounds|length-1].waitingUser.username }}" === '{{ app.user.username }}') {
+                const result = '{{ app.user.username }}';
+                namePlayer.forEach((name) => {
+                    let progressCircle = name.parentElement.children[0].children[0];
+                    if (name.textContent === result) {
+                        timerPlay(progressCircle.children[0].children[1], result);
+                        progressCircle.style.visibility = 'visible';
+                    } else {
+                        progressCircle.style.visibility = 'hidden';
+                    }
+                });
+
+                fetch('/game/possibleCard/{{ game.code }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        player: result
+                    })
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+                    let cardsPossible = JSON.parse(data);
+                    cardsPossible.forEach((card) => {
+                        cards.forEach((card2) => {
+                            let cardSlot = card2.slot;
+                            let typeCard = cardSlot.split('-')[1];
+                            let numberCard = cardSlot.split('-')[0];
+
+                            if (typeCard === card.type && parseInt(numberCard) === card.number) {
+                                card2.style.scale = '1.1';
+                                card2.addEventListener('click', () => {
+                                    fetch('/game/playCard/{{ game.code }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            number: parseInt(numberCard),
+                                            type: typeCard
+                                        })
+                                    }).then(response => {
+                                        return response.json();
+                                    }).then(data => {
+                                        console.log("CardPlayed")
+                                        transitionCardPlayed(card2);
+                                        /!*
+                                        let cardDiv = card2.parentElement;
+                                        cardDiv.parentElement.removeChild(cardDiv);
+                                        document.body.appendChild(card2);
+
+                                        card2.style.position = "absolute";
+                                        card2.style.left = `5%`;
+                                        card2.style.top = `5%`;
+                                        getComputedStyle(card2).top;
+
+                                        card.style.transition = 'transform 0.5s';
+
+
+                                        card.addEventListener('transitionend', function onTransitionEnd() {
+                                            btnSender.click();
+                                            btnSender.click();
+                                            card2.style.display = 'none';
+                                        });
+
+
+                                        isClicked = true;
+                                        cards.forEach((card3) => {
+                                            card3.style.scale = '1';
+                                        });
+
+                                         *!/
+
+                                    });
+                                });
+                            }
+
+                        })
+                    })
+                });
+
+            }
+
+        }*/
+
+
+
+        /* let timeout;
+
+         const resetInactivityTimer = () => {
+             clearTimeout(timeout);
+             timeout = setTimeout(() => {
+                 window.location.href = "/";
+             }, 90000); // 30 secondes
+         };
+
+         document.addEventListener("mousemove", resetInactivityTimer);
+
+         // Initialiser le timer
+         resetInactivityTimer();*/
+
+
+    </script>
+
+</div>
+

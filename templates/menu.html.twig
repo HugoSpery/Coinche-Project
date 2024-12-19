@@ -1,0 +1,70 @@
+<div data-controller="menu">
+    <h2 class="parameter">Paramètres <i class="fa-solid fa-gear"></i></h2>
+    <div class="alertify-notifier">
+
+    </div>
+    <section class="menu">
+        <ul class="menu-ul">
+            <li ><a href="{{ path('app_home') }}" class="menu-item"><i class="fa-solid fa-house"></i> Accueil</a></li>
+            <li><article class="menu-item"><i class="fa-solid fa-wrench"></i> Réglages</article></li>
+            {% if app.user and app.user.isFake == false %}
+
+                <li><a href="{{ path('app_profile') }}" class="menu-item"><i
+                                class="fa-solid fa-user"></i> {{ app.user.username }}</a></li>
+                <li><article class="menu-item open-friends"><i class="fa-solid fa-user-group"></i> Amis</article></li>
+                <li><a href="{{ path('app_logout') }}" class="deco menu-item"><i
+                                class="fa-solid fa-right-from-bracket"></i>
+                        Déconnexion</a></li>
+
+            {% else %}
+                <li><a href="{{ path('app_login') }}" class="menu-item"><i class="fa-solid fa-user"></i> Se
+                        connecter</a>
+                </li>
+                {% if app.user %}
+                    <li><a href="{{ path('app_register') }}" class="menu-item"><i
+                                    class="fa-solid fa-right-to-bracket"></i>
+                            Créer un compte</a></li>
+                    <li><article class="menu-item">{{ app.user.username }}</article></li>
+                {% else %}
+                    <li><a href="{{ path('app_register') }}" class="menu-item"><i
+                                    class="fa-solid fa-right-to-bracket"></i>
+                            Créer un compte</a></li>
+                {% endif %}
+
+
+            {% endif %}
+            <li><article class="menu-close"><i class="fa-solid fa-x"></i></article></li>
+        </ul>
+
+    </section>
+
+
+    {% if app.user and app.user.isFake == false %}
+        <section class="list-friends">
+
+
+            <div class="left-friends">
+                <ul class="options-friends">
+                    <li><a class="option-friends see-friend active first" href="{{ path('app_see_friend_list') }}"
+                           data-turbo-frame="frame">Vos Amis</a></li>
+                    <li><a class="option-friends see-request" href="{{ path('app_see_request_friend') }}"
+                           data-turbo-frame="frame">Demandes d'amis</a></li>
+                    <li><a class="option-friends add-friend" href="{{ path('app_see_user_list') }}"
+                           data-turbo-frame="frame">Ajouter un ami</a></li>
+                    <li class="option-friends last">Utilisateurs Masqués</li>
+                </ul>
+
+            </div>
+            <div class="right-friends">
+                <i class="fa-solid fa-x close-friends"></i>
+                <h2 class="title-right-friends">Amis</h2>
+                <section class="content-friend">
+                    <turbo-frame id="frame">
+                        {{ component('FriendList') }}
+                    </turbo-frame>
+                </section>
+            </div>
+        </section>
+    {% endif %}
+</div>
+

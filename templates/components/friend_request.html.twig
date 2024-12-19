@@ -1,0 +1,22 @@
+<div{{ attributes }} class="see-requests">
+    <div data-controller="friendlist">
+        <input type="search" placeholder="Rechercher un utilisateur" data-model="query" class="search-user">
+        {% for user in this.friendRequestList %}
+            <div class="friend-component" data-href="{{ path('app_profile_other',{id : user.id}) }}" data-action="click->friendlist#visit">
+                <img class="avatar-friend" src="{{ asset(user.avatar) }}" data-href="{{ path('app_profile_other',{id : user.id}) }}" data-action="click->friendlist#visit"/>
+                <h5 class="username-player" data-href="{{ path('app_profile_other',{id : user.id}) }}" data-action="click->friendlist#visit">{{ user.username }}</h5>
+                <button id="{{ user.id }}" class="default-button accept-request" data-href="{{ path('app_accept_request') }}" data-action="click->friendlist#accept"><i class="fa-solid fa-plus"></i>
+                    Accepter
+                </button>
+                <button id="{{ user.id }}" class="default-button reject-request" data-href="{{ path('app_refuse_request') }}" data-action="click->friendlist#decline"><i class="fa-solid fa-user-minus"></i>
+                    Refuser
+                </button>
+            </div>
+        {% endfor %}
+        <article class="container-pagination">
+            {{ knp_pagination_render(this.friendRequestList,"components/live_action_sliding.html.twig") }}
+        </article>
+        <button data-action="live#$render" style="visibility: hidden" class="btn-reset-friend-request">Send</button>
+    </div>
+
+</div>

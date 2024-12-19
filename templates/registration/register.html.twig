@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% include 'menu.html.twig' %}
+    <div class="container">
+        {% for type,message in app.flashes %}
+            <div class="alert alert-{{ type }}">
+                {{ message | join('. ') }}
+            </div>
+        {% endfor %}
+        <h1 class="title-home">Créer un compte</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm,{
+            attr:{
+                class: 'registration_form'
+            }
+        }) }}
+
+
+        {{ form_widget(registrationForm.username,{
+            attr:{
+                placeholder: 'Pseudo'
+            }
+        }) }}
+        {{ form_widget(registrationForm.plainPassword, {
+            attr: {
+                placeholder: 'Mot de Passe'
+            }
+        }) }}
+
+        <button type="submit" class="btn" data-turbo="false">Créer</button>
+        {{ form_end(registrationForm) }}
+    </div>
+
+{% endblock %}

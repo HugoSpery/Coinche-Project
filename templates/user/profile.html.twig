@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+    {% include 'menu.html.twig' %}
+    <div class="container-profile">
+        {% for type,message in app.flashes %}
+            <div class="alert alert-{{ type }}">
+                {{ message | join('. ') }}
+            </div>
+        {% endfor %}
+        <div class="profile">
+            {% if form == null %}
+
+                {% if user in app.user.friends %}
+                    <button slot="reset" data-controller="friendlist" class="delete-friend btn-profile" id="{{ user.id }}" data-href="{{ path('app_delete_friend') }}"
+                            data-action="click->friendlist#delete"><i class="fa-solid fa-user-minus"></i> Supprimer des amis
+                    </button>
+                {% elseif user.username in requestAlreadyDone %}
+                    <button slot="reset" data-controller="userlist" id="{{ user.id }}" class="button-friend waiting-request btn-profile" data-href="{{ path('app_remove_send_request') }}" data-action="click->userlist#remove">En
+                        Attente
+                    </button>
+                {% else %}
+                    <button slot="reset" data-controller="userlist" id="{{ user.id }}" class="button-friend btn-profile" data-href="{{ path('app_send_request') }}" data-action="click->userlist#add"><i class="fa-solid fa-plus"></i>
+                        Ajouter
+                    </button>
+                {% endif %}
+                <img src="{{ asset(user.avatar) }}" alt="avatar" class="avatar-update">
+                <h2 class="username">{{ user.username }}</h2>
+            {% else %}
+                {{ form_errors(form) }}
+
+                {{ form_start(form,{
+                    attr:{
+                        class: 'update_form'
+                    }
+                }) }}
+                <div class="container-image-update">
+                    <article class="voile"></article>
+                    <img src="{{ asset(app.user.avatar) }}" alt="avatar" class="avatar-update">
+                    {{ form_widget(form.avatar) }}
+                </div>
+
+
+                {{ form_widget(form.username,{
+                    attr:{
+                        placeholder: 'Pseudo'
+                    }
+                }) }}
+                <button type="submit" class="btn-update" data-turbo="false">Modifier</button>
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+
+
+        <div class="stat">
+            <div class="stat-content">
+                {% if form == null %}
+                    {% set strings4 = [
+                        'Trophées : ' ~ user.trophy,
+                    ] %}
+                {% else %}
+                    {% set strings4 = [
+                        'Trophées : ' ~ app.user.trophy,
+                    ] %}
+                {% endif %}
+
+                {% set strings = [
+                    'Parties jouées : ' ~ nbGamePlayed,
+                ] %}
+                {% set strings2 = [
+                    'Parties gagnées : ' ~ nbGameWon,
+                ] %}
+                {% set strings3 = [
+                    'Parties perdues : ' ~ nbGameLost,
+                ] %}
+                <h4 class="stat-title"
+                    data-controller="symfony--ux-typed"
+
+                    data-symfony--ux-typed-strings-value="{{ strings4|json_encode|e('html_attr') }}"
+                ></h4>
+                <h4 class="stat-title"
+                    data-controller="symfony--ux-typed"
+
+                    data-symfony--ux-typed-strings-value="{{ strings|json_encode|e('html_attr') }}"
+                ></h4>
+                <h4 class="stat-title"
+                    data-controller="symfony--ux-typed"
+
+                    data-symfony--ux-typed-strings-value="{{ strings2|json_encode|e('html_attr') }}"
+                ></h4>
+                <h4 class="stat-title"
+                    data-controller="symfony--ux-typed"
+                    data-symfony--ux-typed-strings-value="{{ strings3|json_encode|e('html_attr') }}"
+                ></h4>
+            </div>
+            <div class="graph">
+                {{ render_chart(chart) }}
+            </div>
+            <div class="graph2">
+                {{ render_chart(chart2) }}
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

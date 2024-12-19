@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+    {% include 'menu.html.twig' %}
+    <div class="container">
+        {% for type,message in app.flashes %}
+            <div class="alert alert-{{ type }}">
+                {{ message | join('. ') }}
+            </div>
+        {% endfor %}
+        <h1 class="title-home">Bienvenue sur le Jeu de Coinche</h1>
+        <!-- Icônes des symboles de cartes (Trèfle, Cœur, Pique, Carreau) -->
+
+        <!-- Boutons avec icônes Font Awesome -->
+        <a href="{{ path('app_join_party') }}" class="button"><i class="fa-solid fa-rocket"></i>Lancer une partie en ligne</a>
+        <a href="/create/party" class="button"><i class="fas fa-play-circle"></i>Créer une partie privé</a>
+        <a href="/find/party" class="button"><i class="fas fa-search"></i>Trouver une partie privé</a>
+        <a href="/search/party" class="button"><i class="fas fa-user-plus"></i>Rejoindre avec code</a>
+
+    </div>
+
+
+    {{ component('CleanRequest') }}
+
+
+{% endblock %}

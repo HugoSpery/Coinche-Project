@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Recherche de Lobby {% endblock %}
+
+
+{% block stylesheets %}
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #fffcfc; /* Couleur de fond */
+            background-image: url("https://www.transparenttextures.com/patterns/cartographer.png"); /* Image de fond */
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #333; /* Couleur du texte */
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9); /* Fond blanc légèrement transparent */
+            border-radius: 20px; /* Bords arrondis */
+            padding: 40px; /* Espacement interne */
+            width: 90%; /* Largeur adaptable */
+            max-width: 500px; /* Largeur maximale du conteneur */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Ombre portée plus marquée */
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em; /* Taille du titre */
+            color: #2e2e2e; /* Titre en gris très foncé */
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 80%;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ccc; /* Bordure du champ de recherche */
+            border-radius: 5px; /* Bords arrondis */
+            font-size: 1.2em; /* Taille de la police */
+        }
+
+        .animated {
+            -webkit-animation-duration: 10s;
+            animation-duration: 10s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        @-webkit-keyframes wiggle {
+            0% {
+                -webkit-transform: skewX(9deg);
+            }
+            10% {
+                -webkit-transform: skewX(-8deg);
+            }
+            20% {
+                -webkit-transform: skewX(7deg);
+            }
+            30% {
+                -webkit-transform: skewX(-6deg);
+            }
+            40% {
+                -webkit-transform: skewX(5deg);
+            }
+            50% {
+                -webkit-transform: skewX(-4deg);
+            }
+            60% {
+                -webkit-transform: skewX(3deg);
+            }
+            70% {
+                -webkit-transform: skewX(-2deg);
+            }
+            80% {
+                -webkit-transform: skewX(1deg);
+            }
+            90% {
+                -webkit-transform: skewX(0deg);
+            }
+            100% {
+                -webkit-transform: skewX(0deg);
+            }
+        }
+
+        @keyframes wiggle {
+            0% {
+                transform: skewX(9deg);
+            }
+            10% {
+                transform: skewX(-8deg);
+            }
+            20% {
+                transform: skewX(7deg);
+            }
+            30% {
+                transform: skewX(-6deg);
+            }
+            40% {
+                transform: skewX(5deg);
+            }
+            50% {
+                transform: skewX(-4deg);
+            }
+            60% {
+                transform: skewX(3deg);
+            }
+            70% {
+                transform: skewX(-2deg);
+            }
+            80% {
+                transform: skewX(1deg);
+            }
+            90% {
+                transform: skewX(0deg);
+            }
+            100% {
+                transform: skewX(0deg);
+            }
+        }
+
+        .wiggle {
+            -webkit-animation-name: wiggle;
+            animation-name: wiggle;
+            -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+        }
+
+        .animated.wiggle {
+            -webkit-animation-duration: 0.75s;
+            animation-duration: 0.75s;
+        }
+
+
+        .button {
+            background-color: #444444; /* Nouveau gris anthracite pour le bouton */
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.4em; /* Taille de la police du bouton */
+            margin: 15px;
+            border-radius: 8px; /* Bords arrondis du bouton */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s; /* Animation pour le survol */
+        }
+
+        .button:hover {
+            background-color: #333333; /* Couleur plus foncée au survol (gris très foncé) */
+            transform: translateY(-3px); /* Élévation plus marquée au survol */
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em; /* Ajustement de la taille du titre sur petits écrans */
+            }
+
+            .search-input {
+                font-size: 1em; /* Ajustement de la taille du champ de recherche sur petits écrans */
+            }
+
+            .button {
+                font-size: 1.2em; /* Ajustement de la taille du bouton sur petits écrans */
+                padding: 12px 20px; /* Réduction du padding pour petits écrans */
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Recherche de Lobby</h1>
+        <div class="search-container">
+            {% for type,message in app.flashes %}
+                <div class="alert alert-{{ type }}">
+                    {{ message | join('. ') }}
+                </div>
+
+            {% endfor %}
+            {{ form_start(form) }}
+            {{ form_widget(form.data,{"attr": {"class":"search-input animated wiggle","placeholder":"Entrez le code du lobby..."} }) }}
+
+            <button type="submit" class="button"><i class="fas fa-search"></i>Rechercher</button>
+            {{ form_end(form) }}
+
+        </div>
+
+        <a href="/" class="button"><i class="fas fa-arrow-left"></i>Retourner à l'accueil</a>
+    </div>
+
+{% endblock %}

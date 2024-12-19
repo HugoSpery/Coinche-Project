@@ -1,0 +1,110 @@
+<div{{ attributes }}>
+    <div class="player-list" data-controller="playerlobby">
+
+        {% if not this.ranked %}
+            {% if app.user.username == this.chiefPlayer.username %}
+                <select class="choose-type">
+            {% else %}
+                <select class="choose-type" disabled>
+            {% endif %}
+            {% if this.partyState %}
+                <option selected value="public">Public</option>
+                <option value="private">Privé</option>
+            {% else %}
+                <option value="public">Public</option>
+                <option selected value="private">Privé</option>
+            {% endif %}
+                </select>
+        {% endif %}
+
+        <p id="{{ app.user.id }}" slot="{{ code }}" class="code">Le code est : {{ code }}</p>
+
+        <section class="team">
+            <div class="div-team">
+                <h2 class="blue">Bleu</h2>
+                {% for player in this.playersBlue %}
+
+                    {% if player.username == app.user.username %}
+                        {% set class = "you" %}
+                    {% else %}
+                        {% set class = "" %}
+                    {% endif %}
+
+                    {% if player.ready %}
+                        {% set state = '<i class="fa-solid fa-check"></i>' %}
+                    {% else %}
+                        {% set state = '' %}
+                    {% endif %}
+
+
+                    {% if not this.ranked and player.username == this.chiefPlayer.username %}
+                        <div class="player {{ class }}">{{ player.username }} <i class="fa-solid fa-crown chief"></i>
+
+                            {% if app.user.username == this.chiefPlayer.username %}
+                                <button data-action="click->playerlobby#changeTeam" id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="btn-upgrade"><i id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="fa-solid fa-right-left"></i></button>
+                            {% endif %}
+
+                        {{ state | raw }}</div>
+                    {% else %}
+                        {% if not this.ranked and app.user.username == this.chiefPlayer.username %}
+                            <div class="player {{ class }}">{{ player.username }} <button data-action="click->playerlobby#kick" id="{{ player.id }}" name="{{ code }}" data-href="{{ path('app_kick_player') }}" class="btn-kick">Virer</button><button id="{{ player.id }}" name="{{ code }}" class="btn-upgrade" data-action="click->playerlobby#upgrade" data-href="{{ path('app_update_lobby_new_chief') }}">Nommer Chef</button> <button data-action="click->playerlobby#changeTeam" id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="btn-upgrade"><i id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="fa-solid fa-right-left"></i></button> {{ state | raw }}</div>
+                        {% else %}
+                            <div class="player {{ class }}">{{ player.username }} {{ state | raw }}</div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="div-team">
+                <h2 class="red">Rouge</h2>
+                {% for player in this.playersRed %}
+
+                    {% if player.username == app.user.username %}
+                        {% set class = "you" %}
+                    {% else %}
+                        {% set class = "" %}
+                    {% endif %}
+
+                    {% if player.ready %}
+                        {% set state = '<i class="fa-solid fa-check"></i>' %}
+                    {% else %}
+                        {% set state = '' %}
+                    {% endif %}
+
+
+
+                    {% if not this.ranked and player.username == this.chiefPlayer.username %}
+                        <div class="player {{ class }}">{{ player.username }} <i class="fa-solid fa-crown chief"></i>
+                            {% if app.user.username == this.chiefPlayer.username %}
+                                <button data-action="click->playerlobby#changeTeam" id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="btn-upgrade"><i id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="fa-solid fa-right-left"></i></button>
+                            {% endif %}
+                        {{ state | raw }}</div>
+                    {% else %}
+                        {% if not this.ranked and app.user.username == this.chiefPlayer.username %}
+                            <div class="player {{ class }}">{{ player.username }} <button data-action="click->playerlobby#kick" id="{{ player.id }}" name="{{ code }}" data-href="{{ path('app_kick_player') }}" class="btn-kick">Virer</button><button id="{{ player.id }}" name="{{ code }}" class="btn-upgrade" data-action="click->playerlobby#upgrade" data-href="{{ path('app_update_lobby_new_chief') }}">Nommer Chef</button> <button data-action="click->playerlobby#changeTeam" id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="btn-upgrade"><i id="{{ player.id }}" data-href="{{ path('app_update_team') }}" class="fa-solid fa-right-left"></i></button> {{ state | raw }}</div>
+                        {% else %}
+                            <div class="player {{ class }}">{{ player.username }} {{ state | raw }}</div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+            <!-- Exemples de joueurs -->
+
+            <button data-action="live#$render" style="visibility: hidden" class="btn-sender">Send</button>
+
+               <div class="button-lobby">
+                    <a href="{{ path('app_quit_lobby') }}" class="button"><i class="fas fa-sign-out-alt"></i>Quitter le lobby</a>
+
+                    {% if this.currentPlayer.ready %}
+                        <button class="button" data-action="click->playerlobby#update" id="{{ app.user.id }}" data-href="{{ path('app_update_state_user') }}" ><i class="fa-solid fa-x annu"></i>Annuler</button>
+                    {% else %}
+                        <button class="button" data-action="click->playerlobby#update" id="{{ app.user.id }}" data-href="{{ path('app_update_state_user') }}"><i class="fas fa-play-circle"></i>Prêt ?</button>
+                    {% endif %}
+
+                    <!-- Plus de joueurs peuvent être ajoutés ici -->
+               </div>
+    </div>
+
+
+</div>

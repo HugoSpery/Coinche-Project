@@ -1,0 +1,24 @@
+{{ component('FriendList') }}
+<div class="add-friends">
+    <input type="search" placeholder="Rechercher un utilisateur" class="search-user">
+    {% for user in users %}
+        <div class="friend-component">
+            <img class="avatar-friend" src="{{ asset('images/avatar.png') }}"/>
+            <h5 class="username-player">{{ user.username }}</h5>
+            {% if user.username in requestAlreadyDone %}
+                <button id="{{ user.id }}" class="button-friend waiting-request">En
+                    Attente
+                </button>
+            {% else %}
+                <button id="{{ user.id }}" class="button-friend"><i class="fa-solid fa-plus"></i>
+                    Ajouter
+                </button>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <article class="container-pagination">
+        {{ knp_pagination_render(users) }}
+    </article>
+</div>
+<div id="friendRequest">
+</div>

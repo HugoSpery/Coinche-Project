@@ -1,0 +1,37 @@
+{% if pageCount > 1 %}
+    <div class="pagination">
+        {% if first is defined and current != first %}
+            <span class="first">
+                <button class="button-pagination" data-action="live#action:prevent" data-live-action-param="setPage" data-live-page-param="{{ first }}">&lt;&lt;</button>
+            </span>
+        {% endif %}
+
+        {% if previous is defined %}
+            <span class="previous">
+                <button class="button-pagination" rel="prev" data-action="live#action:prevent" data-live-action-param="setPage" data-live-page-param="{{ previous }}">&lt;</button>
+            </span>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <span class="page">
+                    <button class="button-pagination" data-action="live#action:prevent" data-live-action-param="setPage" data-live-page-param="{{ page }}" >{{ page }}</button>
+                </span>
+            {% else %}
+                <span class="current">{{ page }}</span>
+            {% endif %}
+        {% endfor %}
+
+        {% if next is defined %}
+            <span class="next">
+                <button class="button-pagination" rel="next" data-action="live#action:prevent" data-live-action-param="setPage" data-live-page-param="{{ next }}" >&gt;</button>
+            </span>
+        {% endif %}
+
+        {% if last is defined and current != last %}
+            <span class="last">
+                <button class="button-pagination" data-action="live#action:prevent" data-live-action-param="setPage" data-live-page-param="{{ last }}">&gt;&gt;</button>
+            </span>
+        {% endif %}
+    </div>
+{% endif %}

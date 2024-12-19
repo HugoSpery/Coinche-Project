@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Fin de la partie</h1>
+        <article>
+            {% if game.pointsBlue > game.pointsRed %}
+                <h2 class="winner color-blue">
+                    Gagnant :
+                    {{ game.teamBlue[0].username }}, {{ game.teamBlue[1].username }}
+                </h2>
+            {% else %}
+                <h2 class="winner color-red">
+                    Gagnant :
+                    {{ game.teamRed[0].username }}, {{ game.teamRed[1].username }}
+                </h2>
+            {% endif %}
+            <div><h3>Bleu : {{ game.pointsBlue }} - Rouge : {{ game.pointsRed }}</h3></div>
+            <div>
+                <article class="end-players">
+                    <p class="color-blue">{{ game.teamBlue[0].username }}</p>, <p class="color-red">{{ game.teamRed[0].username }}</p>
+                </article>
+                <article class="end-players">
+                    <p class="color-blue">{{ game.teamBlue[1].username }}</p>, <p class="color-red">{{ game.teamRed[1].username }}</p>
+                </article>
+            </div>
+        </article>
+        <a href="/create/party" class="button"><i class="fas fa-play-circle"></i>Créer une nouvelle partie</a>
+        <a href="/" class="button"><i class="fas fa-home"></i>Retour à l'accueil</a>
+    </div>
+{% endblock %}

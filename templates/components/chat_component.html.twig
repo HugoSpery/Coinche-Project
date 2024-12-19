@@ -1,0 +1,43 @@
+<div{{ attributes }} class="chat">
+    <div class="content-chat" data-controller="playerlobby">
+        <section class="messages">
+            {% for elt in this.messages %}
+
+                {% if elt.isNotification %}
+
+                    {{ elt.content | raw }}
+
+                {% else %}
+
+                <div class="message
+                    {% if not elt.isNotification and elt.userSender.username == app.user.username %}
+                        right-message
+                    {% elseif not elt.isNotification %}
+                        left-message
+                    {% endif %}
+                ">
+                        <div class="message-info">
+                            <p class="message-content">{{ elt.content }}</p>
+                            <p class="usersender">{{ elt.userSender.username }} <img
+                                        src="{{ asset(elt.userSender.avatar) }}" alt="avatar" class="avatar-message"/>
+                            </p>
+                        </div>
+                </div>
+                {% endif %}
+
+            {% endfor %}
+        </section>
+
+        <section class="sender">
+            <input data-href="{{ path('app_send_message') }}" data-action="keydown->playerlobby#detectEnter"
+                   class="send-message" type="text" placeholder="Envoyer un message...">
+            <button data-action="click->playerlobby#send" data-href="{{ path('app_send_message') }}"
+                    class="btn-senderMessage"><i data-href="{{ path('app_send_message') }}"
+                                                 class="fa-regular fa-paper-plane"></i></button>
+        </section>
+
+        <button data-action="live#$render" style="display: none" class="btn-chat">Send</button>
+
+    </div>
+
+</div>

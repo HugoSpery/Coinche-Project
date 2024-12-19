@@ -1,0 +1,25 @@
+<div{{ attributes }} class="add-friends">
+    <div data-controller="userlist">
+        <input type="search" placeholder="Rechercher un utilisateur" data-model="query" class="search-user">
+        {% for user in this.userList %}
+            <div class="friend-component" data-href="{{ path('app_profile_other',{id : user.id}) }}" data-action="click->userlist#visit" >
+                <img class="avatar-friend" data-href="{{ path('app_profile_other',{id : user.id}) }}" data-action="click->userlist#visit" src="{{ asset(user.avatar) }}"/>
+                <h5 class="username-player" data-href="{{ path('app_profile_other',{id : user.id}) }}" data-action="click->userlist#visit">{{ user.username }}</h5>
+                {% if user.username in this.requestAlreadyDone %}
+                    <button id="{{ user.id }}" class="button-friend waiting-request" data-href="{{ path('app_remove_send_request') }}" data-action="click->userlist#remove">En
+                        Attente
+                    </button>
+                {% else %}
+                    <button id="{{ user.id }}" class="button-friend" data-href="{{ path('app_send_request') }}" data-action="click->userlist#add"><i class="fa-solid fa-plus"></i>
+                        Ajouter
+                    </button>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <article class="container-pagination">
+            {{ knp_pagination_render(this.userList,"components/live_action_sliding.html.twig") }}
+        </article>
+        <button data-action="live#$render" style="visibility: hidden" class="btn-reset-user">Send</button>
+
+    </div>
+</div>

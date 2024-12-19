@@ -1,0 +1,53 @@
+<div{{ attributes }} class="friends">
+    <div data-controller="friendlist">
+        <input type="search" placeholder="Rechercher un utilisateur" data-model="query" class="search-user">
+        {% for friend in this.friendList %}
+            <div class="friend-component" data-href="{{ path('app_profile_other',{id : friend.id}) }}" data-action="click->friendlist#visit">
+                <img class="avatar-friend" data-href="{{ path('app_profile_other',{id : friend.id}) }}" data-action="click->friendlist#visit"
+                     src="{{ asset(friend.avatar) }}"/>
+                <h5 data-href="{{ path('app_profile_other',{id : friend.id}) }}" data-action="click->friendlist#visit">{{ friend.username }}</h5>
+                {% if friend.username in this.partyRequest %}
+                    <button id="{{ friend.id }}" class="default-button waiting-request remove-invite"
+                            data-href="{{ path('app_remove_invite') }}" data-action="click->friendlist#removeInvite"><i
+                                class="fa-solid fa-envelope"></i> En Attente
+                    </button>
+                {% else %}
+                    <button id="{{ friend.id }}" class="invite-party" data-href="{{ path('app_invite_party') }}"
+                            data-action="click->friendlist#invite"><i class="fa-solid fa-envelope"></i> Inviter
+                    </button>
+                {% endif %}
+
+                {% if friend.username in this.teamRequestReceiver %}
+                    <button id="{{ friend.id }}" class="default-button waiting-request remove-invite"
+                            data-href="{{ path('app_send_remove_team_request') }}" data-action="click->friendlist#removeTeamRequest"><i class="fa-solid fa-people-group"></i> Annuler
+                    </button>
+                {% elseif friend.username in this.teamRequestSender%}
+                    <button id="{{ friend.id }}" class="invite-party" data-href="{{ path('app_send_accept_team_request') }}"
+                            data-action="click->friendlist#acceptTeamRequest"><i class="fa-solid fa-people-group"></i> Accepter l'équipe
+                    </button>
+
+                {% else %}
+                    <button id="{{ friend.id }}" class="invite-party" data-href="{{ path('app_send_team_request') }}"
+                            data-action="click->friendlist#sendTeamRequest"><i class="fa-solid fa-people-group"></i> Créer une équipe
+                    </button>
+
+                {% endif %}
+
+                {% if friend.username in this.inviteRequest %}
+                    <button id="{{ friend.id }}" class="default-button accept-invite"
+                            data-href="{{ path('app_accept_invite') }}" data-action="click->friendlist#acceptInvite"><i
+                                class="fa-solid fa-check"></i> Accepter
+                    </button>
+                {% endif %}
+
+                <button class="delete-friend" id="{{ friend.id }}" data-href="{{ path('app_delete_friend') }}"
+                        data-action="click->friendlist#delete"><i class="fa-solid fa-user-minus"></i> Supprimer
+                </button>
+            </div>
+        {% endfor %}
+        <article class="container-pagination">
+            {{ knp_pagination_render(this.friendList,"components/live_action_sliding.html.twig") }}
+        </article>
+        <button data-action="live#$render" style="visibility: hidden" class="btn-reset-friend">Send</button>
+    </div>
+</div>

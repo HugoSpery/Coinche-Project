@@ -1,0 +1,6 @@
+knp_paginator:
+  default_options:
+    page_name: page # Nom par défaut du paramètre de page
+    sort_field_name: sort
+    sort_direction_name: direction
+    distinct: true

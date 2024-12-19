@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}Lobby - Attente{% endblock %}
+{% block stylesheets %}
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #fffcfc; /* Couleur de fond */
+            background-image: url("https://www.transparenttextures.com/patterns/cartographer.png"); /* Image de fond */
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #333; /* Couleur du texte */
+        }
+
+
+    </style>
+{% endblock %}
+{% block body %}
+
+    {% include 'menu.html.twig' %}
+    <div class="lobby-container">
+
+        {% for type,message in app.flashes %}
+            <div class="alert alert-{{ type }}">
+                {{ message | join('. ') }}
+            </div>
+        {% endfor %}
+        <h1 class="title-home">Lobby</h1>
+
+        {{ component('PlayersLobby',{code : party.code}) }}
+
+
+    </div>
+
+
+
+    {{ component('ChatComponent') }}
+
+{% endblock %}

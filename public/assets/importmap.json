@@ -1,0 +1,98 @@
+{
+    "app": {
+        "path": "\/assets\/app-c377011f14050c436c90151955169d81.js",
+        "type": "js"
+    },
+    "\/assets\/bootstrap.js": {
+        "path": "\/assets\/bootstrap-cee1dbb8ef9b25c226ba130bb8155f00.js",
+        "type": "js"
+    },
+    "\/assets\/@symfony\/stimulus-bundle\/controllers.js": {
+        "path": "\/assets\/@symfony\/stimulus-bundle\/controllers-50d2dd65f6f6f1bfeb4c9c3d07f0f7fd.js",
+        "type": "js"
+    },
+    "\/assets\/@symfony\/ux-chartjs\/controller.js": {
+        "path": "\/assets\/@symfony\/ux-chartjs\/controller-ca19c6fa17c0c7a61a47fa5cd49a8137.js",
+        "type": "js"
+    },
+    "\/assets\/@symfony\/ux-live-component\/live_controller.js": {
+        "path": "\/assets\/@symfony\/ux-live-component\/live_controller-b4fdb1f53d5a5f813f85327cceb706b8.js",
+        "type": "js"
+    },
+    "\/assets\/@symfony\/ux-live-component\/live.min.css": {
+        "path": "\/assets\/@symfony\/ux-live-component\/live.min-5108f988fb2a3dbb292d6feebc9db7e8.css",
+        "type": "css"
+    },
+    "\/assets\/@symfony\/ux-turbo\/turbo_controller.js": {
+        "path": "\/assets\/@symfony\/ux-turbo\/turbo_controller-ce5e32dafdec0b7752f02e3e2cb25751.js",
+        "type": "js"
+    },
+    "\/assets\/@symfony\/ux-typed\/controller.js": {
+        "path": "\/assets\/@symfony\/ux-typed\/controller-2aaa9a5284350fabf2ed79ad53c4f85c.js",
+        "type": "js"
+    },
+    "\/assets\/controllers\/playerlobby_controller.js": {
+        "path": "\/assets\/controllers\/playerlobby_controller-9386d6607411c7c769e8f31c0d16bcbe.js",
+        "type": "js"
+    },
+    "\/assets\/controllers\/game_controller.js": {
+        "path": "\/assets\/controllers\/game_controller-27e842b98e5db8c19ab1191fcabda4c6.js",
+        "type": "js"
+    },
+    "\/assets\/controllers\/userlist_controller.js": {
+        "path": "\/assets\/controllers\/userlist_controller-086220cf9ba044fd672dfb8cc19a3c82.js",
+        "type": "js"
+    },
+    "\/assets\/controllers\/friendlist_controller.js": {
+        "path": "\/assets\/controllers\/friendlist_controller-4a1f2764b7743b0457216d6e9655e393.js",
+        "type": "js"
+    },
+    "\/assets\/controllers\/menu_controller.js": {
+        "path": "\/assets\/controllers\/menu_controller-813e55f8d3dcf88cbdd91e468f628646.js",
+        "type": "js"
+    },
+    "\/assets\/styles\/app.css": {
+        "path": "\/assets\/styles\/app-46df72628f4ea817488651b54fa020b3.css",
+        "type": "css"
+    },
+    "\/assets\/home.js": {
+        "path": "\/assets\/home-08493e4c30f5dec2232d01000eaa0836.js",
+        "type": "js"
+    },
+    "@hotwired\/stimulus": {
+        "path": "\/assets\/vendor\/@hotwired\/stimulus\/stimulus.index-b5b1d00e42695b8959b4a1e94e3bc92a.js",
+        "type": "js"
+    },
+    "@symfony\/stimulus-bundle": {
+        "path": "\/assets\/@symfony\/stimulus-bundle\/loader-870999a02e9fc147c034d522826ea70d.js",
+        "type": "js"
+    },
+    "@symfony\/ux-live-component": {
+        "path": "\/assets\/@symfony\/ux-live-component\/live_controller-b4fdb1f53d5a5f813f85327cceb706b8.js",
+        "type": "js"
+    },
+    "jquery": {
+        "path": "\/assets\/vendor\/jquery\/jquery.index-fb3b33d7311be80ac8aa5c367205beba.js",
+        "type": "js"
+    },
+    "alertifyjs": {
+        "path": "\/assets\/vendor\/alertifyjs\/alertifyjs.index-b364289d6886dba2618291a7a9d1457e.js",
+        "type": "js"
+    },
+    "alertifyjs\/build\/css\/alertify.min.css": {
+        "path": "\/assets\/vendor\/alertifyjs\/build\/css\/alertify.min-aafe79f0df7716da43faac415f63df91.css",
+        "type": "css"
+    },
+    "@hotwired\/turbo": {
+        "path": "\/assets\/vendor\/@hotwired\/turbo\/turbo.index-810f44ef1a202a441e4866b7a4c72d11.js",
+        "type": "js"
+    },
+    "chart.js": {
+        "path": "\/assets\/vendor\/chart.js\/chart.js.index-5ef6f3c0a946679607ea18943aa445ea.js",
+        "type": "js"
+    },
+    "typed.js": {
+        "path": "\/assets\/vendor\/typed.js\/typed.js.index-ff372d4a61b79633566bdf4d4a3cad71.js",
+        "type": "js"
+    }
+}

@@ -1,0 +1,21 @@
+[
+    "\/assets\/bootstrap.js",
+    "\/assets\/styles\/app.css",
+    "\/assets\/home.js",
+    "@symfony\/stimulus-bundle",
+    "@hotwired\/stimulus",
+    "\/assets\/@symfony\/stimulus-bundle\/controllers.js",
+    "\/assets\/@symfony\/ux-chartjs\/controller.js",
+    "\/assets\/@symfony\/ux-live-component\/live_controller.js",
+    "\/assets\/@symfony\/ux-live-component\/live.min.css",
+    "\/assets\/@symfony\/ux-turbo\/turbo_controller.js",
+    "\/assets\/@symfony\/ux-typed\/controller.js",
+    "\/assets\/controllers\/playerlobby_controller.js",
+    "\/assets\/controllers\/game_controller.js",
+    "\/assets\/controllers\/userlist_controller.js",
+    "\/assets\/controllers\/friendlist_controller.js",
+    "\/assets\/controllers\/menu_controller.js",
+    "chart.js",
+    "@hotwired\/turbo",
+    "typed.js"
+]

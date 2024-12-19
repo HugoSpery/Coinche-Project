@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+
+    {% include 'menu.html.twig' %}
+    <div class="container">
+        {% for type,message in app.flashes %}
+            <div class="alert alert-{{ type }}">
+                {{ message | join('. ') }}
+            </div>
+        {% endfor %}
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <h1 class="title-home">Se Connecter</h1>
+        <form class="registration_form" method="post">
+
+
+
+            <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control"
+                   autocomplete="username" required autofocus placeholder="Pseudo">
+
+            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password"
+                   required placeholder="Mot de Passe">
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+
+
+            <button class="btn btn-lg btn-primary" type="submit">
+                Se connecter
+            </button>
+        </form>
+    </div>
+{% endblock %}
